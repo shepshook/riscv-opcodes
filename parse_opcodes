@@ -35,6 +35,12 @@ arglut['bimm12lo'] = (11,7)
 arglut['zimm'] = (19,15)
 arglut['shamt'] = (25,20)
 arglut['shamtw'] = (24,20)
+arglut['rc'] = (29,25)
+arglut['imm2'] = (21,20)
+arglut['imm3'] = (22,20)
+arglut['imm4'] = (23,20)
+arglut['imm5'] = (24,20)
+arglut['imm6'] = (25,20)
 
 # for vectors
 arglut['vd'] = (11,7)
@@ -289,6 +295,9 @@ csrs = [
   (0x33D, 'mhpmevent29'),
   (0x33E, 'mhpmevent30'),
   (0x33F, 'mhpmevent31'),
+  
+  # rvp
+  (0x801, 'ucode'),
 
   # Standard Machine RO
   (0xF11, 'mvendorid'),
@@ -1080,12 +1089,12 @@ def parse_inputs(args):
             mymask = mymask | ((1<<(hi+1))-(1<<lo))
 
           if cover & ((1<<(hi+1))-(1<<lo)):
-            sys.exit("%s: overspecified" % name)
+            sys.exit("%s: overspecified1" % name)
           cover = cover | ((1<<(hi+1))-(1<<lo))
 
         elif token in arglut:
           if cover & ((1<<(arglut[token][0]+1))-(1<<arglut[token][1])):
-            sys.exit("%s: overspecified" % name)
+            sys.exit("%s: overspecified2 (%s)" % (name, token))
           cover = cover | ((1<<(arglut[token][0]+1))-(1<<arglut[token][1]))
           arguments[name].append(token)
 
